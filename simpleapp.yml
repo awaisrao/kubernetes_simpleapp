@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-app
+spec:
+  selector:
+    matchLabels:
+      run: webapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: webapp
+    spec:
+      containers:
+        - name: mysql1
+          image: mysql:5.7
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "true"
+        - name: simpleapp
+          image: awaiszulfiqar/simpleapp2
+          ports:
+            - containerPort: 5000
+              protocol: TCP
+
+
